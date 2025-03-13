@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Timer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1e1e1e;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+    }
+    #countdown {
+      font-size: 2.5rem;
+      text-align: center;
+    }
+    #message {
+      font-size: 1.5rem;
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="countdown">Loading...</div>
+  <div id="message">Don't forget me, I'm coming back.</div>
+
+  <script>
+    // Set the target date (June 1, 2030, midnight in Hanoi timezone, UTC+7)
+    const targetDate = new Date("2030-06-01T00:00:00+07:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const timeLeft = targetDate - now;
+
+      // Calculate days, hours, minutes, and seconds
+      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+      // Display the countdown
+      document.getElementById("countdown").innerHTML =
+        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+      // If the countdown is over, display a message
+      if (timeLeft < 0) {
+        clearInterval(interval);
+        document.getElementById("countdown").innerHTML = "Time's up!";
+      }
+    }
+
+    // Update the countdown every second
+    const interval = setInterval(updateCountdown, 1000);
+    updateCountdown(); // Initial call to avoid delay
+  </script>
+</body>
+</html>
